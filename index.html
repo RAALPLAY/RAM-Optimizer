@@ -1,57 +1,156 @@
-<link rel="stylesheet" href="style.css">
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAM Optimizer</title>
-    <link rel="shortcut icon" href="img/icon.ico" type="image/x-icon">
+    <title>RAM Optimizer - Potencia Máxima para tu PC</title>
+    <meta name="description" content="Libera y optimiza la memoria RAM de tu sistema con la tecnología Empty Standby List. Descarga RAM Optimizer gratis y experimenta un rendimiento inigualable.">
+    
+    <!-- Google Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="img/icon.svg" type="image/svg+xml">
 </head>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="index.js"></script>
-<body id="body">
-    <div class="tabbar">
-        <img src="img/icon.ico">
-        <h3 class="logo">RAM <h2>OPTIMIZER</h2></h3>
-        <a href="#footer">CONTACT</a>
-        <a href="policies.html">POLICIES</a>
-        <a href="#body">DOWNLOAD</a>
-    </div>
-    <div class="content">
-        <div class="info">
-            <div id="description">
-                <div>
-                    <p> RAM Optimizer es una poderosa herramienta para ayudar con la limpieza de la memoria RAM
-                    utilizando la tecnologia de Empty Standby List.</p>
-                    <a id="download" href="http://"><button>DESCARGAR
-                        <i id="ver">v1.1.0</i> 
-                    </button></a>
+<body>
+
+    <header class="navbar">
+        <div class="container">
+            <a href="#hero" class="logo">
+                <img src="img/icon.svg" alt="RAM Optimizer Icon">
+                <div class="logo-text">
+                    <span class="logo-ram">RAM</span>
+                    <span class="logo-optimizer">Optimizer</span>
                 </div>
-            </div>
-            <div class="features">
-                <div class="contain">
-                    <h1>SIN TIEMPOS DE ESPERA</h1>
-                    <p>Libera memoria RAM en un solo click y realiza tus tareas mientras todo sucede en segundo plano.</p>
-                </div>
-            
-                <div class="contain">
-                    <h1>APROVECHA EL MÁXIMO</h1>
-                    <p>RAM Optimizer fuerza la liberacion de la memoria RAM para aumentar al maximo la cantidad de espacio disponible.
-                    </p>
-                </div>
-            
-                <div class="contain">
-                    <h1>¿POR QUÉ ELEGIRNOS?</h1>
-                    <p>RAM Optimizer utiliza la tecnologia de Empty Standby List para optimizacion de la memoria RAM, liberando procesos en ejecucion, lista de páginas modificadas y listas de espera.
-                    </p>
-                </div>
-            </div>
-            <footer id="footer">
-                <p style="float: left;">Copyright© 2022 RAALPLAY</p>
-                <p style="float: right;">raalplayofficial@gmail.com</p>
-            </footer>
+            </a>
+            <nav>
+                <a href="#features">Características</a>
+                <a href="#how-it-works">¿Cómo Funciona?</a>
+                <a href="#tech">Tecnología</a>
+                <a href="policies.html">Políticas</a>
+                <a href="#download" class="btn btn-outline">Descargar</a>
+            </nav>
         </div>
-    </div>
+    </header>
+
+    <main>
+        <section id="hero" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="animate-on-scroll fade-in-up">Desbloquea el Verdadero Potencial de tu PC</h1>
+                    <p class="animate-on-scroll fade-in-up" style="animation-delay: 0.2s;">RAM Optimizer es la herramienta definitiva para limpiar y acelerar tu memoria RAM. Disfruta de un sistema más rápido y fluido con un solo click.</p>
+                    <a id="download-main" href="#" class="btn btn-primary animate-on-scroll fade-in-up" style="animation-delay: 0.4s;">
+                        Descargar Gratis <i id="ver" class="fas fa-download"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="glow-ball-1"></div>
+            <div class="glow-ball-2"></div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <div class="feature-card animate-on-scroll scale-in">
+                    <i class="fas fa-bolt-lightning"></i>
+                    <h3>SIN TIEMPOS DE ESPERA</h3>
+                    <p>Libera memoria RAM al instante. Nuestro proceso se ejecuta en segundo plano para que no interrumpas tus tareas.</p>
+                </div>
+                <div class="feature-card animate-on-scroll scale-in" style="animation-delay: 0.2s;">
+                    <i class="fas fa-rocket"></i>
+                    <h3>APROVECHA AL MÁXIMO</h3>
+                    <p>Forzamos la liberación de la memoria para maximizar el espacio disponible y potenciar el rendimiento de tus aplicaciones y juegos.</p>
+                </div>
+                <div class="feature-card animate-on-scroll scale-in" style="animation-delay: 0.4s;">
+                    <i class="fas fa-microchip"></i>
+                    <h3>TECNOLOGÍA AVANZADA</h3>
+                    <p>Usamos Empty Standby List para una limpieza profunda y efectiva, a diferencia de otros optimizadores superficiales.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- New "How it Works" Section -->
+        <section id="how-it-works" class="how-it-works-section">
+            <div class="container">
+                <div class="section-header animate-on-scroll fade-in-up">
+                    <h2>Simple, Rápido y Efectivo</h2>
+                    <p>Nuestro proceso de optimización se resume en tres sencillos pasos.</p>
+                </div>
+                <div class="steps-container">
+                    <!-- Step 1 -->
+                    <div class="step-card animate-on-scroll fade-in-up">
+                        <div class="step-visual">
+                            <i class="fas fa-memory"></i>
+                            <i class="fas fa-magnifying-glass-chart step-icon-overlay"></i>
+                        </div>
+                        <h3>1. Análisis Inteligente</h3>
+                        <p>RAM Optimizer escanea tu memoria en busca de procesos inactivos y datos en caché que pueden ser liberados de forma segura.</p>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="step-card animate-on-scroll fade-in-up" style="animation-delay: 0.2s;">
+                        <div class="step-visual">
+                            <i class="fas fa-shield-halved"></i>
+                            <i class="fas fa-broom step-icon-overlay"></i>
+                        </div>
+                        <h3>2. Limpieza Profunda</h3>
+                        <p>Utilizando Empty Standby List, vaciamos las listas de espera y las páginas modificadas, recuperando gigabytes de RAM.</p>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="step-card animate-on-scroll fade-in-up" style="animation-delay: 0.4s;">
+                        <div class="step-visual">
+                            <i class="fas fa-gauge-high"></i>
+                            <i class="fas fa-plus step-icon-overlay"></i>
+                        </div>
+                        <h3>3. Aceleración Inmediata</h3>
+                        <p>Con más RAM disponible, tus aplicaciones y juegos tienen el espacio que necesitan para funcionar a máxima velocidad.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tech" class="tech-section">
+            <div class="container">
+                <div class="tech-content animate-on-scroll fade-in-left">
+                    <h2>¿Por qué elegirnos?</h2>
+                    <p>RAM Optimizer no es un optimizador común. Utilizamos la tecnología <strong>Empty Standby List</strong>, una función nativa de Windows, para dirigirnos específicamente a áreas de la memoria que otros programas ignoran. Liberamos de forma segura:</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Procesos en ejecución en caché.</li>
+                        <li><i class="fas fa-check-circle"></i> Lista de páginas modificadas.</li>
+                        <li><i class="fas fa-check-circle"></i> Listas de espera (Standby Lists).</li>
+                    </ul>
+                    <p>El resultado es una recuperación de RAM real y tangible que se traduce en un rendimiento superior.</p>
+                </div>
+                <div class="tech-visual animate-on-scroll fade-in-right">
+                    <div class="tech-icon-container">
+                        <i class="fas fa-database"></i>
+                        <i class="fas fa-bolt-lightning optimizing-bolt"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="download" class="cta-section">
+            <div class="container">
+                <h2 class="animate-on-scroll fade-in-up">Listo para una experiencia más fluida?</h2>
+                <p class="animate-on-scroll fade-in-up" style="animation-delay: 0.2s;">Descarga RAM Optimizer hoy mismo. Es rápido, seguro y completamente gratis.</p>
+                <a id="download-cta" href="#" class="btn btn-primary btn-large animate-on-scroll fade-in-up" style="animation-delay: 0.4s;">
+                    Obtener RAM Optimizer <i class="fas fa-arrow-down"></i>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 RAALPLAY. Todos los derechos reservados.</p>
+            <p><a href="mailto:raalplayofficial@gmail.com">raalplayofficial@gmail.com</a></p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>

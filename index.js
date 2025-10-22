@@ -1,23 +1,44 @@
-$(document).ready(function(){
-    $.get("update.xml",{},function(xml){
-      // alert(xml);
-      $('update',xml).each(function(i) {
-        var url = ((xml.getElementsByTagName('link')[i]).childNodes[0]).nodeValue;
-        var version = ((xml.getElementsByTagName('version')[i]).childNodes[0]).nodeValue;
-        document.getElementById("ver").innerHTML = "v" + version
-        document.getElementById("download").href = url
-      });
+$(document).ready(function() {
+
+    // --- Fetch Update Info ---
+    function fetchUpdateInfo() {
+        $.ajax({
+            url: "update.xml",
+            dataType: "xml",
+            success: function(xml) {
+                const $update = $(xml).find('update');
+                const url = $update.find('link').text();
+                const version = $update.find('version').text();
+
+                // Update all download links and version text
+                $('#ver').text(`v${version}`);
+                $('#download-main').attr('href', url);
+                $('#download-cta').attr('href', url);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error("Error loading update.xml:", textStatus, errorThrown);
+                // Fallback: hide version or show error
+                $('#ver').text('');
+            }
+        });
+    }
+    fetchUpdateInfo();
+
+    // --- Scroll-reveal Animations using Intersection Observer ---
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target); // Animate only once
+            }
+        });
+    }, {
+        threshold: 0.1 // Trigger when 10% of the element is visible
     });
 
-    $('a[href^="#"]').click(function() {
-      var destino = $(this.hash);
-      if (destino.length == 0) {
-        destino = $('a[name="' + this.hash.substr(1) + '"]');
-      }
-      if (destino.length == 0) {
-        destino = $('html');
-      }
-      $('html, body').animate({ scrollTop: destino.offset().top }, 1000);
-      return false;
+    // Observe all elements with the class
+    $('.animate-on-scroll').each(function() {
+        observer.observe(this);
     });
-  });
+
+});

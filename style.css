@@ -1,215 +1,543 @@
+/* --- VARIABLES & BASIC SETUP --- */
+:root {
+    --bg-dark: #11004e;
+    --accent-primary: #8a2be2;
+    --text-light: #e0e0e0;
+    --text-dark: #1f1f1f;
+    --border-color: rgba(138, 43, 226, 0.3);
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --glow-shadow: 0 0 12px var(--accent-primary), 0 0 24px rgba(138, 43, 226, 0.4); /* Sombra más sutil */
+    --font-family: 'Poppins', sans-serif;
+    --transition-speed: 0.3s ease;
+}
+
 @font-face {
     font-family: 'Doctor Glitch';
     font-style: normal;
     font-weight: 400;
-    src: local('Doctor Glitch'), url('https://fonts.cdnfonts.com/s/19221/Doctor Glitch.woff') format('woff');
+    src: local('Doctor Glitch'),
+         url('https://fonts.cdnfonts.com/s/19221/Doctor Glitch.woff') format('woff');
+    font-display: swap;
 }
 
-*{
+/* --- VARIABLES & BASIC SETUP --- */
+
+*, *::before, *::after {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    font-weight: 500;
 }
-::-webkit-scrollbar {
-    display: none;
+
+html {
+    scroll-behavior: smooth;
 }
-html{
-    background-color: rgb(17, 0, 78);
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    line-height: 1.7;
+    overflow-x: hidden;
 }
-.tabbar{
-    position: fixed;
-    width: 100%;
-    height: min-content;
-    background-color: white;
+
+/* --- GLOBAL COMPONENTS --- */
+.container {
+    width: 90%;
+    max-width: 1200px;
     margin: 0 auto;
-    line-height: 50px;
+}
+
+.btn {
     display: inline-block;
+    position: relative; /* Necesario para el pseudo-elemento */
+    padding: 12px 28px;
+    border-radius: 50px;
+    text-decoration: none; /* Asegura que no haya subrayado */
+    font-weight: 600;
+    transition: transform 0.5s ease-out, box-shadow 0.5s ease-out, opacity 0.6s ease-out; /* Transiciones combinadas */
+    border: 2px solid transparent;
+    z-index: 1; /* Asegura que el botón esté sobre el pseudo-elemento */
+}
+
+.btn-primary {
+    background-color: var(--accent-primary);
+    color: white;
+    box-shadow: 0 0 0 rgba(138, 43, 226, 0); /* Sin sombra inicial en el botón mismo */
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 0 20px var(--accent-primary), 0 0 40px var(--accent-primary);
+}
+
+/* El brillo pulsante ahora está en un pseudo-elemento para no interferir con el hover */
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50px;
+    box-shadow: 0 0 8px rgba(138, 43, 226, 0.6);
+    animation: breathe-box-glow 4s infinite ease-in-out;
+    z-index: -1;
+    opacity: 1;
+    transition: opacity 0.5s ease-out; /* Transición de opacidad más suave */
+}
+
+.btn-primary:hover::before {
+    opacity: 0; /* Ocultamos el brillo pulsante en hover para dar paso al brillo del botón */
+}
+
+.btn-outline {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+.btn-outline:hover {
+    background-color: var(--accent-primary);
+    color: white;
+}
+
+.btn-large {
+    padding: 16px 40px;
+    font-size: 1.1rem;
+}
+
+/* --- NAVBAR --- */
+.navbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    padding: 15px 0;
+    background-color: rgba(17, 0, 78, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    box-shadow: 0 0 0.7rem white;
-    z-index: 10;
 }
-.tabbar *{
-    float: left;
-    color: black;
-}
-.content{
-    width: 100%;
-    height: 100%;
-    background-color: rgb(140, 55, 209);
-}
-.mid{
-    width: 100%;
-    height: 300px;
-    background-color: rgb(4, 65, 65);
-}
-.tabbar img{
-    height: 30px;
-    margin: 10px 15px 10px 15px;
-    width: auto;
-    vertical-align: middle;
-}
-.tabbar a{
-    float: right;
-    margin-right: 20px;
+
+.navbar .logo {
+    display: flex;
+    align-items: center;
     text-decoration: none;
-    color: rgb(32, 32, 32);
-    transition: 0.3s;
+    color: white;
+    text-shadow: 0 0 8px var(--accent-primary);
 }
-.tabbar a:hover{
-    color: rgba(24, 0, 129, 0.7);
+
+.logo-text {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
 }
-.logo{
-    margin-right: 5px;
-    height: 100%;
-    width: min-content;
-    font-family: 'Doctor Glitch', sans-serif;
-    letter-spacing: 3px;
+
+.logo-ram {
+    font-family: "Doctor Glitch", sans-serif;
+    font-size: 1.6rem;
+    font-weight: 400; /* Doctor Glitch looks better at normal weight */
+}
+
+.logo-optimizer {
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    transform: translateY(1px); /* Fine-tune vertical alignment */
+}
+
+.navbar .logo img {
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 0.5rem; /* Aplicado el border-radius al icono del logo */
+}
+
+.navbar nav {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.navbar nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color var(--transition-speed);
+}
+
+.navbar nav a:not(.btn):hover {
+    color: var(--accent-primary);
+    text-shadow: 0 0 5px var(--accent-primary);
+}
+
+/* --- HERO SECTION --- */
+.hero {
+    position: relative;
+    padding: 150px 0;
+    text-align: center;
+    overflow: hidden;
+    background-image: linear-gradient(rgba(17, 0, 78, 0.8), rgba(17, 0, 78, 0.95)), url('img/pc_background.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Efecto parallax para un toque moderno */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-shadow: 0 0 15px rgba(138, 43, 226, 0.8);
+}
+
+.hero p {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto 40px;
     font-weight: 300;
 }
-.tabbar h2{
-    font-style: italic;
-    font-size: 18px;
+
+.hero .btn i {
+    margin-left: 10px;
 }
-.info{
-    padding-top: 50px;
-    width: 100%;
-    height: 600px;
-    text-align: left;
-    font-size: 20px;
-    background-image: url(img/pc_background.jpg);
-    background-size: cover;
-    background-position: 50% 0%;
-}
-.info .features{
-    width: 100%;
-    height: min-content;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    padding-top: 100px;
-    padding-bottom: 100px;
-    background-color: rgb(17, 0, 78);
-    box-shadow: 10px rgb(255, 255, 255);
-}
-.info .features .contain{
-    width: 300px;
-    min-width: 270px;
-    margin: 40px;
-    padding-top: 20px;
-    height: 400px;
-    border: 3px solid blueviolet;
-    box-shadow: 0 0 0.5rem blueviolet;
-    border-radius: 20px;
-    float: left;
-    transition: 0.3s;
-}
-.info .features .contain:hover{
-    background-color: rgba(138, 43, 226, 0.3);
-    box-shadow: 0 0 1rem blueviolet;
-    transform: translate(0, -10px);
-}
-.info .features .contain *{
-    margin: 20px;
-    cursor: default;
-}
-.info .features .contain h1{
-    color: white;
-    height: 50px;
-    font-size: 18px;
-    font-family: 'Doctor Glitch', sans-serif;
-    font-weight: 200;
-    text-align: center;
-    letter-spacing: 3px;
-}
-.info .features .contain p{
-    color: white;
-    text-align: left;
-    font-size: 17px;
-    padding: 30px;
-}
-.info #description{
-    padding-left: 70px;
-    width: 50%;
-    height: 600px;
-    background: -webkit-linear-gradient(left,black, rgba(0,0,0,0));
+
+.glow-ball-1, .glow-ball-2 {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    filter: blur(120px); /* Blur ligeramente reducido */
     z-index: 1;
+    animation: pulse-glow 15s infinite ease-in-out alternate; /* Animación de pulso */
 }
-.info #description div{
-    width: 100%;
-    height: 100%;
-    font-size: 25px;
+
+.glow-ball-1 {
+    width: 400px;
+    height: 400px;
+    top: -150px;
+    left: -150px;
+    opacity: 0.6;
 }
-.info #description button{
-    margin-top: 40px;
-    padding: 15px;
-    color: white;
-    font-size: 17px;
-    background-color: blueviolet;
-    border-radius: 100px;
-    box-shadow: 0 0 0.3rem blueviolet;
-    border: 2px solid blueviolet;
-    cursor: pointer;
-    width: 200px;
-    transition: 1s;
+
+.glow-ball-2 {
+    width: 300px;
+    height: 300px;
+    bottom: -150px;
+    right: -150px;
+    opacity: 0.5;
+    animation-delay: -7.5s; /* Desfase de la animación */
 }
-.info #description button:hover{
-    background-color: rgba(0,0,0,0);
-    border-radius: 10px;
-    transition: 0.3s;
+
+/* --- FEATURES SECTION --- */
+.features {
+    padding: 100px 0;
 }
-.info #description p{
-    padding-top: 130px;
-    width: 350px;
-    margin-bottom: 30px;
-    min-width: 300px;
-    color: white;
+
+.features .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
 }
-.info #description i{
-    font-size: 13px;
-    margin-left: 7px;
-}
-footer{
-    width: 100%;
-    height: 100px;
-    background-color: blueviolet;
-    box-shadow: 0 0 0.7rem blueviolet;
-}footer p{
-    padding: 0 30px 0 30px;
-    color: white;
-    font-size: 16px;
-    line-height: 100px;
-}
-.parrafo{
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-.parrafo *{
-    padding: 100px;
-    margin-top: 20px;
-    color: white;
-    font-weight: 100;
-    background-color: rgb(17, 0, 78);
-}
-.parrafo h1{
-    padding: 0;
-    padding-top: 50px;
-    margin: 0 20px;
-    width: 100%;
-    line-height: 200px;
-    border: 3px solid blueviolet;
-    border-radius: 30px;
-    background-color: rgba(138, 43, 226, 0.3);
-    box-shadow: 0 0 0.5rem blueviolet;
-    font-family: 'Doctor Glitch', sans-serif;
-    letter-spacing: 3px;
+
+.feature-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    padding: 40px 30px;
     text-align: center;
-    color: white;
-    transition: 0.3s;
+    transition: transform 0.6s ease-out, box-shadow 0.5s ease-out, opacity 0.6s ease-out; /* Transiciones combinadas */
 }
-.parrafo h1:hover{
-    transform: translate(0, 10px);
-    box-shadow: 0 0 1rem blueviolet;
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 20px var(--accent-primary); /* Sombra de hover con color de acento */
+}
+
+.feature-card i {
+    font-size: 3rem;
+    color: var(--accent-primary);
+    margin-bottom: 20px;
+    animation: breathe-text-glow 4s infinite ease-in-out;
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+/* --- HOW IT WORKS SECTION --- */
+.how-it-works-section {
+    padding: 100px 0;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.section-header p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    color: rgba(255,255,255,0.8);
+}
+
+.steps-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.step-card {
+    text-align: center;
+}
+
+.step-visual {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 30px;
+    color: var(--accent-primary);
+}
+
+.step-visual > .fa-memory,
+.step-visual > .fa-shield-halved,
+.step-visual > .fa-gauge-high {
+    font-size: 6rem;
+    opacity: 0.3;
+}
+
+.step-icon-overlay {
+    position: absolute;
+    font-size: 3rem;
+    color: white;
+    text-shadow: 0 0 10px white, 0 0 20px var(--accent-primary);
+    animation: icon-float 3s infinite ease-in-out;
+}
+
+.step-card:nth-child(2) .step-icon-overlay {
+    animation-delay: -1s;
+}
+
+.step-card:nth-child(3) .step-icon-overlay {
+    animation-delay: -2s;
+}
+
+.step-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+/* --- TECH SECTION --- */
+.tech-section {
+    padding: 100px 0;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.tech-section .container {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.tech-content {
+    flex: 1;
+}
+
+.tech-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.tech-content ul {
+    list-style: none;
+    margin: 20px 0;
+}
+
+.tech-content ul li {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.tech-content ul li i {
+    color: var(--accent-primary);
+    margin-right: 10px;
+}
+
+.tech-visual {
+    flex: 1;
+    text-align: center;
+}
+
+.tech-visual img {
+    max-width: 100%;
+    filter: drop-shadow(0 0 15px var(--accent-primary));
+}
+
+/* Estilos para el nuevo visual de iconos */
+.tech-icon-container {
+    position: relative;
+    display: inline-block;
+    color: var(--accent-primary);
+    filter: drop-shadow(0 0 15px var(--accent-primary));
+}
+
+.tech-icon-container .fa-database {
+    font-size: 12rem;
+    animation: breathe-text-glow 4s infinite ease-in-out;
+}
+
+.optimizing-bolt {
+    position: absolute;
+    font-size: 4rem;
+    color: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-shadow: 0 0 10px white, 0 0 20px var(--accent-primary);
+    animation: bolt-flash 2s infinite ease-in-out;
+}
+
+@keyframes bolt-flash {
+    0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.9); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* --- CTA SECTION --- */
+.cta-section {
+    padding: 120px 0;
+    text-align: center;
+}
+
+.cta-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.cta-section p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+}
+
+/* --- FOOTER --- */
+.footer {
+    padding: 30px 0;
+    background-color: #0a002c;
+    border-top: 1px solid var(--border-color);
+}
+
+.footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.6);
+}
+
+.footer a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    transition: color var(--transition-speed);
+}
+
+.footer a:hover {
+    color: var(--accent-primary);
+}
+
+/* --- POLICY PAGE --- */
+.policy-page {
+    padding: 100px 0;
+}
+
+.policy-page .container {
+    max-width: 900px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    padding: 50px;
+}
+
+.policy-page h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: white;
+    text-align: center;
+}
+
+.policy-page .last-updated {
+    text-align: center;
+    margin-bottom: 40px;
+    color: rgba(255,255,255,0.6);
+}
+
+.policy-page .policy-section {
+    margin-bottom: 30px;
+    padding-left: 20px;
+    border-left: 3px solid var(--accent-primary);
+}
+
+/* --- ANIMATIONS --- */
+.animate-on-scroll {
+    opacity: 0;
+}
+
+.fade-in-up { transform: translateY(30px); }
+.fade-in-left { transform: translateX(-30px); }
+.fade-in-right { transform: translateX(30px); }
+.scale-in { transform: scale(0.9); }
+
+.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+@keyframes icon-float {
+    0%, 100% { transform: translateY(-5px); }
+    50% { transform: translateY(5px); }
+}
+
+@keyframes breathe-text-glow {
+    0% { text-shadow: 0 0 8px rgba(138, 43, 226, 0.6); }
+    50% { text-shadow: 0 0 16px var(--accent-primary), 0 0 24px rgba(138, 43, 226, 0.4); }
+    100% { text-shadow: 0 0 8px rgba(138, 43, 226, 0.6); }
+}
+
+@keyframes breathe-box-glow {
+    0% { box-shadow: 0 0 8px rgba(138, 43, 226, 0.6); }
+    50% { box-shadow: 0 0 16px var(--accent-primary), 0 0 24px rgba(138, 43, 226, 0.4); }
+    100% { box-shadow: 0 0 8px rgba(138, 43, 226, 0.6); }
+}
+
+@keyframes pulse-glow {
+    from {
+        transform: scale(0.9);
+        opacity: 0.4;
+    }
+    to {
+        transform: scale(1.1);
+        opacity: 0.7;
+    }
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .navbar nav { display: none; } /* Simple hide for mobile, can be replaced with a burger menu */
+    .hero h1 { font-size: 2.5rem; }
+    .tech-section .container { flex-direction: column; }
 }
